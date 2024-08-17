@@ -3,4 +3,10 @@
   <PropertyGroup>
     <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TestCertificate>CN="WDKTestCert Sergio,133683282511280927" | 43F56D162FE4972098EE25ADBB7622E64C3F6BB7</TestCertificate>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TestCertificate>CN="WDKTestCert Sergio,133683282511280927" | 43F56D162FE4972098EE25ADBB7622E64C3F6BB7</TestCertificate>
+  </PropertyGroup>
 </Project>
