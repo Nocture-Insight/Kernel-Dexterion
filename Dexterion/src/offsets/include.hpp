@@ -1,40 +1,40 @@
 #pragma once
 
-#include "../lib/json/jsonOps.hpp"
+#include "../../lib/json/jsonOps.hpp"
 #include "../util/functions.hpp"
 
-namespace clientDLL {
-	nlohmann::json clientDLLOffsets;
+inline namespace clientDLL {
+	inline nlohmann::json clientDLLOffsets;
 
-	nlohmann::json C_BaseEntity_;
-	nlohmann::json C_BaseModelEntity_;
-	nlohmann::json CCSPlayerController_;
-	nlohmann::json CBasePlayerController_;
-	nlohmann::json C_BasePlayerPawn_;
-	nlohmann::json C_CSPlayerPawn_;
-	nlohmann::json C_CSPlayerPawnBase_;
-	nlohmann::json CBaseAnimGraph_;
-	nlohmann::json C_EconItemView_;
-	nlohmann::json C_AttributeContainer_;
-	nlohmann::json C_EconEntity_;
-	nlohmann::json CSkeletonInstance_;
-	nlohmann::json CGameSceneNode_;
-	nlohmann::json EntitySpottedState_t_;
-	nlohmann::json C_CSGameRules_;
-	nlohmann::json CCSWeaponBaseVData_;
-	nlohmann::json CCSPlayerBase_CameraServices_;
-	nlohmann::json C_PlantedC4_;
+	inline nlohmann::json C_BaseEntity_;
+	inline nlohmann::json C_BaseModelEntity_;
+	inline nlohmann::json CCSPlayerController_;
+	inline nlohmann::json CBasePlayerController_;
+	inline nlohmann::json C_BasePlayerPawn_;
+	inline nlohmann::json C_CSPlayerPawn_;
+	inline nlohmann::json C_CSPlayerPawnBase_;
+	inline nlohmann::json CBaseAnimGraph_;
+	inline nlohmann::json C_EconItemView_;
+	inline nlohmann::json C_AttributeContainer_;
+	inline nlohmann::json C_EconEntity_;
+	inline nlohmann::json CSkeletonInstance_;
+	inline nlohmann::json CGameSceneNode_;
+	inline nlohmann::json EntitySpottedState_t_;
+	inline nlohmann::json C_CSGameRules_;
+	inline nlohmann::json CCSWeaponBaseVData_;
+	inline nlohmann::json CCSPlayerBase_CameraServices_;
+	inline nlohmann::json C_PlantedC4_;
 
-	bool load();
+	inline bool load();
 };
 
 
-namespace offsets {
-	nlohmann::json clientDLL;
+inline namespace offsets {
+	inline nlohmann::json clientDLL;
 
-	bool load();
+	inline bool load();
 };
 
 bool loadJson();
 
-nlohmann::json buttons;
+inline nlohmann::json buttons;
