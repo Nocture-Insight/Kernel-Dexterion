@@ -1,5 +1,12 @@
+#pragma once
+
 #include <Windows.h>
 #include <TlHelp32.h>
+#include <cstdint>
+
+#define BYTE_InRange(x, a, b)	(x >= a && x <= b) 
+#define BYTE_GetBits(x)			(BYTE_InRange((x&(~0x20)),'A','F') ? ((x&(~0x20)) - 'A' + 0xa) : (BYTE_InRange(x,'0','9') ? x - '0' : 0))
+#define BYTE_Get(x)				(BYTE_GetBits(x[0]) << 4 | BYTE_GetBits(x[1]))
 
 #ifndef TRUE
 #define TRUE 1
@@ -27,6 +34,76 @@ struct DriverRequest {
 
 class MemoryManagement {
 public:
+	HANDLE driv;
+
+	struct moduleData {
+		HMODULE module;
+		DWORD_PTR base;
+		uintptr_t size;
+	};
+
+	__forceinline bool Signature_IsMatch(uint8_t* m_Address, uint8_t* m_Pattern, uint8_t* m_Mask)
+	{
+		size_t m_Index = 0;
+		while (m_Address[m_Index] == m_Pattern[m_Index] || m_Mask[m_Index] == (uint8_t)('?'))
+		{
+			if (!m_Mask[++m_Index])
+				return true;
+		}
+
+		return false;
+	}
+
+	uintptr_t FindSignature(uintptr_t m_Address, uintptr_t m_Size, const char* m_Signature)
+	{
+		size_t m_SignatureLength = strlen(m_Signature);
+
+		uint8_t* m_PatternAlloc = new uint8_t[m_SignatureLength >> 1];
+		uint8_t* m_MaskAlloc = new uint8_t[m_SignatureLength >> 1];
+		uint8_t* m_Pattern = m_PatternAlloc;
+		uint8_t* m_Mask = m_MaskAlloc;
+
+		// Run-Time IDA Sig to Sig & Mask
+		size_t m_PatternLength = 0;
+		while (*m_Signature)
+		{
+			if (*m_Signature == ' ') m_Signature++;
+			if (!*m_Signature) break;
+
+			if (*(uint8_t*)(m_Signature) == (uint8_t)('\?'))
+			{
+				*m_Pattern++ = 0;
+				*m_Mask++ = '?';
+				m_Signature += ((*(uint16_t*)(m_Signature) == (uint16_t)('\?\?')) ? 2 : 1);
+			}
+			else
+			{
+				*m_Pattern++ = BYTE_Get(m_Signature);
+				*m_Mask++ = 'x';
+				m_Signature += 2;
+			}
+
+			++m_PatternLength;
+		}
+
+		// Find Address
+		*m_Mask = 0;
+
+		uintptr_t m_ReturnValue = 0;
+		for (uintptr_t i = 0; m_Size > i; ++i)
+		{
+			if (Signature_IsMatch(reinterpret_cast<uint8_t*>(m_Address + i), m_PatternAlloc, m_MaskAlloc))
+			{
+				m_ReturnValue = (m_Address + i);
+				break;
+			}
+		}
+
+		delete[] m_PatternAlloc;
+		delete[] m_MaskAlloc;
+		return m_ReturnValue;
+	}
+
 	DWORD GetPid(const wchar_t* process_name) {
 		DWORD process_id = 0;
 
@@ -35,7 +112,7 @@ public:
 			return process_id;
 
 		PROCESSENTRY32W entry = {};
-		entry.dwSize = sizeof(decltype(entry));
+		entry.dwSize = sizeof(entry);
 
 		if (Process32FirstW(snapshot, &entry) == TRUE) {
 			if (_wcsicmp(process_name, entry.szExeFile) == 0)
@@ -87,11 +164,13 @@ public:
 		DriverRequest r;
 		r.process_id = reinterpret_cast<HANDLE>(pid);
 
+		this->driv = handle;
+
 		return DeviceIoControl(handle, DriverCodes::Attach, &r, sizeof(r), &r, sizeof(r), nullptr, nullptr);
 	}
 
 	template <class T>
-	T Read(HANDLE handle, const uintptr_t addr) {
+	T Read(const uintptr_t addr) {
 		T temp = {};
 
 		DriverRequest r;
@@ -99,19 +178,19 @@ public:
 		r.buffer = &temp;
 		r.size = sizeof(T);
 
-		DeviceIoControl(handle, DriverCodes::Read, &r, sizeof(r), &r, sizeof(r), nullptr, nullptr);
+		DeviceIoControl(this->driv, DriverCodes::Read, &r, sizeof(r), &r, sizeof(r), nullptr, nullptr);
 
 		return temp;
 	}
 
 	template <class T>
-	void Write(HANDLE handle, uintptr_t addr, const T& value) {
+	void Write(uintptr_t addr, const T& value) {
 		DriverRequest r;
 		r.target = reinterpret_cast<PVOID>(addr);
 		r.buffer = (PVOID)&value;
 		r.size = sizeof(T);
 
-		DeviceIoControl(handle, DriverCodes::Write, &r, sizeof(r), &r, sizeof(r), nullptr, nullptr);
+		DeviceIoControl(this->driv, DriverCodes::Write, &r, sizeof(r), &r, sizeof(r), nullptr, nullptr);
 	}
 };
 
