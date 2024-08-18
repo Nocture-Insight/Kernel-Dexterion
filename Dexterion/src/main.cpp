@@ -1,9 +1,9 @@
 #include <iostream>
-#include "util/Memory.hpp"
-#include "offsets/include.hpp"
+
+#include "offsets/offsets.hpp"
 
 int main() {
-	const HANDLE driver = CreateFile(L"\\\\.\\DexterionDriver", GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+	const HANDLE driver = CreateFileW(L"\\\\.\\DexterionDriver", GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	if (driver == INVALID_HANDLE_VALUE) {
 		std::cout << "Failed to create driver!" << std::endl;
@@ -32,29 +32,19 @@ int main() {
 		if (client.base != 0) {
 			std::cout << "Client found!" << std::endl;
 
-			// BHop for testing
+			bool state = true;
 
 			while (true) {
-				if (GetAsyncKeyState(VK_END))
+				if (GetKeyState(VK_END))
+					state = false;
+
+				CCSPlayerController CPS_(client.base);
+				LocalPlayer lp(client.base);
+				CPS_.value = lp.getPlayerPawn();
+				Logger.Info(CPS_.getPawnName());
+
+				if (!state)
 					break;
-
-				const uintptr_t localPlayerPawn = Driver.Read<uintptr_t>(client.base + offsets::clientDLL["dwLocalPlayerPawn"]);
-
-				if (localPlayerPawn == 0)
-					continue;
-
-				const auto flags = Driver.Read<uint32_t>(localPlayerPawn + clientDLL::C_BaseEntity_["m_fFlags"]);
-
-				const bool in_air = flags & (1 << 0);
-				const bool space_pressed = GetAsyncKeyState(VK_SPACE);
-
-				if (space_pressed && in_air) {
-					Sleep(5);
-					Driver.Write(client.base + buttons["jump"], 65537);
-				}
-				else if (space_pressed && !in_air) {
-					Driver.Write(client.base + buttons["jump"], 256);
-				}
 			}
 		}
 	}
