@@ -1,5 +1,7 @@
+#define WIN32_LEAN_AND_MEAN 
 #include <iostream>
-
+#include "../lib/json/jsonOps.hpp"
+#include "offsets/offsets.cpp"
 #include "offsets/offsets.hpp"
 
 int main() {
@@ -23,7 +25,15 @@ int main() {
 
 	MemoryManagement::moduleData client;
 
+	/*
+	if (!loadJson()) {
+		return 0; 
+	}
+
 	loadJson();
+
+	nigga wtf
+	*/
 
 	if (Driver.AttachToProccess(driver, pid) == true) {
 		std::cout << "Attachment successful!" << std::endl;
@@ -40,6 +50,7 @@ int main() {
 
 				CCSPlayerController CPS_(client.base);
 				LocalPlayer lp(client.base);
+
 				CPS_.value = lp.getPlayerPawn();
 				Logger.Info(CPS_.getPawnName());
 
@@ -48,6 +59,7 @@ int main() {
 			}
 		}
 	}
+
 #else
 	const DWORD pid = Driver.GetPid(L"msedge.exe");
 

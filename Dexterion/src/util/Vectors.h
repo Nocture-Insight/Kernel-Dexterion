@@ -1,10 +1,6 @@
-#pragma once
-#pragma warning (disable: 4172)
+#pragma once 
 
-
-#define WIN32_LEAN_AND_MEAN 
-
-#include <Windows.h>
+#include <windows.h>
 
 #include <numbers>
 #include <cmath>

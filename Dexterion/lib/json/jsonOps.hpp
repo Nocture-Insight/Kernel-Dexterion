@@ -1,7 +1,5 @@
 #pragma once
-
 #include <fstream>
-
 #include "json.hpp"
 
 inline namespace json {
