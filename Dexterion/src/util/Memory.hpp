@@ -1,8 +1,10 @@
 #pragma once
+#pragma warning(disable: 4312)
 
 #include <Windows.h>
 #include <TlHelp32.h>
 #include <cstdint>
+#include <winioctl.h>
 
 #define BYTE_InRange(x, a, b)	(x >= a && x <= b) 
 #define BYTE_GetBits(x)			(BYTE_InRange((x&(~0x20)),'A','F') ? ((x&(~0x20)) - 'A' + 0xa) : (BYTE_InRange(x,'0','9') ? x - '0' : 0))
@@ -183,6 +185,21 @@ public:
 		return temp;
 	}
 
+	bool ReadRaw(const uintptr_t addr, LPVOID buffer, SIZE_T size) {
+
+		DWORD bytesRead;
+
+		DriverRequest r;
+		r.target = reinterpret_cast<PVOID>(addr);
+		r.buffer = buffer;
+		r.size = size;
+
+		if (DeviceIoControl(this->driv, DriverCodes::Read, &r, sizeof(r), &r, sizeof(r), &bytesRead, nullptr))
+			return size == bytesRead;
+
+		return FALSE;
+	}
+
 	template <class T>
 	void Write(uintptr_t addr, const T& value) {
 		DriverRequest r;
@@ -192,6 +209,4 @@ public:
 
 		DeviceIoControl(this->driv, DriverCodes::Write, &r, sizeof(r), &r, sizeof(r), nullptr, nullptr);
 	}
-};
-
-MemoryManagement Driver;
+} Driver;
