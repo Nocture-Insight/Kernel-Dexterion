@@ -19,11 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>17.0</VCProjectVersion>
+    <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{fbcbd346-dba1-4585-8447-02f344d4eacc}</ProjectGuid>
-    <RootNamespace>Dexterion</RootNamespace>
+    <ProjectGuid>{e6cbdc8b-c819-4a41-85b1-27203f206e29}</ProjectGuid>
+    <RootNamespace>dexterion</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Dexterion</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -43,7 +44,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -70,13 +71,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediates\Dexterion\</IntDir>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <OutDir>$(SolutionDir)Build\</OutDir>
-    <IntDir>$(SolutionDir)Build\Intermediates\Dexterion\</IntDir>
+    <IntDir>$(SolutionDir)Build\Intermediates\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -112,15 +111,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
-      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,56 +124,78 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
-      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="lib\imgui\imgui.cpp" />
-    <ClCompile Include="lib\imgui\imgui_demo.cpp" />
-    <ClCompile Include="lib\imgui\imgui_draw.cpp" />
-    <ClCompile Include="lib\imgui\imgui_impl_dx11.cpp" />
-    <ClCompile Include="lib\imgui\imgui_impl_win32.cpp" />
-    <ClCompile Include="lib\imgui\imgui_tables.cpp" />
-    <ClCompile Include="lib\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\config\config.cpp" />
-    <ClCompile Include="src\features\entry.cpp" />
-    <ClCompile Include="src\gui\overlay.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\offsets\offsets.hpp" />
-    <ClCompile Include="src\offsets\offsets.cpp" />
+    <ClInclude Include="features\aim.hpp" />
+    <ClInclude Include="features\bomb.hpp" />
+    <ClInclude Include="features\entry.hpp" />
+    <ClInclude Include="features\esp.hpp" />
+    <ClInclude Include="features\include.hpp" />
+    <ClInclude Include="features\misc.hpp" />
+    <ClInclude Include="gui\menu.hpp" />
+    <ClInclude Include="gui\overlay.hpp" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="imgui\imgui_impl_win32.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\imstb_rectpack.h" />
+    <ClInclude Include="imgui\imstb_textedit.h" />
+    <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="imgui\render.h" />
+    <ClInclude Include="json\json.hpp" />
+    <ClInclude Include="json\jsonOps.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="util\attributes.hpp" />
+    <ClInclude Include="util\config.hpp" />
+    <ClInclude Include="util\DiscordVerify.hpp" />
+    <ClInclude Include="util\HTTPRequest.hpp" />
+    <ClInclude Include="util\MemMan.hpp" />
+    <ClInclude Include="util\utilFunctions.hpp" />
+    <ClInclude Include="util\Vectors.h" />
+    <ClInclude Include="util\weaponInfo.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\imgui\imconfig.h" />
-    <ClInclude Include="lib\imgui\imgui.h" />
-    <ClInclude Include="lib\imgui\imgui_impl_dx11.h" />
-    <ClInclude Include="lib\imgui\imgui_impl_win32.h" />
-    <ClInclude Include="lib\imgui\imgui_internal.h" />
-    <ClInclude Include="lib\imgui\imstb_rectpack.h" />
-    <ClInclude Include="lib\imgui\imstb_textedit.h" />
-    <ClInclude Include="lib\imgui\imstb_truetype.h" />
-    <ClInclude Include="src\config\config.hpp" />
-    <ClInclude Include="src\features\entry.hpp" />
-    <ClInclude Include="src\gui\overlay.hpp" />
-    <ClInclude Include="src\offsets\include.hpp" />
-    <ClInclude Include="src\util\functions.hpp" />
-    <ClInclude Include="lib\json\json.hpp" />
-    <ClInclude Include="lib\json\jsonOps.hpp" />
-    <ClInclude Include="src\util\Memory.hpp" />
-    <ClInclude Include="src\util\Vectors.h" />
+    <ClCompile Include="features\aim.cpp" />
+    <ClCompile Include="features\bomb.cpp" />
+    <ClCompile Include="features\entry.cpp" />
+    <ClCompile Include="features\esp.cpp" />
+    <ClCompile Include="features\misc.cpp" />
+    <ClCompile Include="gui\menu.cpp" />
+    <ClCompile Include="gui\overlay.cpp" />
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_demo.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="imgui\imgui_tables.cpp" />
+    <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="json\jsonOps.cpp" />
+    <ClCompile Include="dexterion.cpp" />
+    <ClCompile Include="util\attributes.cpp" />
+    <ClCompile Include="util\config.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\dexterion.ico" />
+    <Image Include="assets\dexterion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Dexterion.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
