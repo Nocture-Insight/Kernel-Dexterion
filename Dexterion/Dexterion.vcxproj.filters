@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="lib\imgui\imgui.cpp" />
+    <ClCompile Include="lib\imgui\imgui_demo.cpp" />
+    <ClCompile Include="lib\imgui\imgui_draw.cpp" />
+    <ClCompile Include="lib\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="lib\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="lib\imgui\imgui_tables.cpp" />
+    <ClCompile Include="lib\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\config\config.cpp" />
+    <ClCompile Include="src\features\entry.cpp" />
+    <ClCompile Include="src\gui\overlay.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\offsets\offsets.hpp" />
+    <ClCompile Include="src\offsets\offsets.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\imgui\imconfig.h" />
+    <ClInclude Include="lib\imgui\imgui.h" />
+    <ClInclude Include="lib\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="lib\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="lib\imgui\imgui_internal.h" />
+    <ClInclude Include="lib\imgui\imstb_rectpack.h" />
+    <ClInclude Include="lib\imgui\imstb_textedit.h" />
+    <ClInclude Include="lib\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\config\config.hpp" />
+    <ClInclude Include="src\features\entry.hpp" />
+    <ClInclude Include="src\gui\overlay.hpp" />
+    <ClInclude Include="src\offsets\include.hpp" />
+    <ClInclude Include="src\util\functions.hpp" />
+    <ClInclude Include="lib\json\json.hpp" />
+    <ClInclude Include="lib\json\jsonOps.hpp" />
+    <ClInclude Include="src\util\Memory.hpp" />
+    <ClInclude Include="src\util\Vectors.h" />
+  </ItemGroup>
+</Project>
