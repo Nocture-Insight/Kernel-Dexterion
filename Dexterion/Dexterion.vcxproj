@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{e6cbdc8b-c819-4a41-85b1-27203f206e29}</ProjectGuid>
-    <RootNamespace>dexterion</RootNamespace>
+    <ProjectGuid>{fbcbd346-dba1-4585-8447-02f344d4eacc}</ProjectGuid>
+    <RootNamespace>Dexterion</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Dexterion</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -111,11 +110,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,7 +130,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,7 +139,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
-      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -194,7 +197,24 @@
     <Image Include="assets\dexterion.png" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Dexterion.rc" />
+    <ClInclude Include="lib\imgui\imconfig.h" />
+    <ClInclude Include="lib\imgui\imgui.h" />
+    <ClInclude Include="lib\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="lib\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="lib\imgui\imgui_internal.h" />
+    <ClInclude Include="lib\imgui\imstb_rectpack.h" />
+    <ClInclude Include="lib\imgui\imstb_textedit.h" />
+    <ClInclude Include="lib\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\config\config.hpp" />
+    <ClInclude Include="src\features\entry.hpp" />
+    <ClInclude Include="src\gui\overlay.hpp" />
+    <ClInclude Include="src\offsets\include.hpp" />
+    <ClInclude Include="src\util\functions.hpp" />
+    <ClInclude Include="lib\json\json.hpp" />
+    <ClInclude Include="lib\json\jsonOps.hpp" />
+    <ClInclude Include="src\util\Memory.hpp" />
+    <ClInclude Include="src\util\Vectors.h" />
+    <ClInclude Include="src\util\Vectors.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

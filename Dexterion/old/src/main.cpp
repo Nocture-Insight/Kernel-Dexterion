@@ -1,3 +1,4 @@
+#define WIN32_LEAN_AND_MEAN 
 #include <iostream>
 
 #include "offsets/offsets.cpp"
@@ -39,7 +40,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	MemoryManagement::moduleData client;
 
+	/*
+	if (!loadJson()) {
+		return 0; 
+	}
+
 	loadJson();
+
+	nigga wtf
+	*/
 
 	if (Driver.AttachToProccess(driver, pid) == true) {
 		std::cout << "Attachment successful!" << std::endl;
@@ -66,6 +75,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 				CCSPlayerController CPS_(client.base);
 				LocalPlayer lp(client.base);
+
 				CPS_.value = lp.getPlayerPawn();
 				Logger.Info(CPS_.getPawnName());
 
