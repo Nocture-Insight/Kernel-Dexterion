@@ -1,15 +1,15 @@
 #include "esp.hpp"
 
 void ESP::Main(C_CSPlayerPawn C_CSPlayerPawn_, view_matrix_t viewMatrix, CCSPlayerController CCSPlayerController_, CGameSceneNode CGameSceneNode_) {
+	if (!Gui::IsMenuOpen())
+		if (!utils::IsGameWindowActive()) return;
+
 	if (espConf.boundBox) ESP::BoundingBox(C_CSPlayerPawn_.origin, viewMatrix, CGameSceneNode_.boneArray);
 	if (espConf.skeleton) ESP::SkeletonESP(viewMatrix, CGameSceneNode_.boneArray);
 }
 
 void ESP::BoundingBox(Vector3 origin, view_matrix_t viewMatrix, uintptr_t boneArray) {
 	if (origin.IsZero()) return;
-
-	if (!Gui::IsMenuOpen())
-		if (!utils::IsGameWindowActive()) return;
 
 	Vector3 originalPTS = origin.worldToScreen(viewMatrix);
 	if (originalPTS.z < 0.1f) return;
