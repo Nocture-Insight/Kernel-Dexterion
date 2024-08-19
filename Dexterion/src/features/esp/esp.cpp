@@ -12,7 +12,8 @@ void ESP::BoundingBox(Vector3 origin, view_matrix_t viewMatrix, uintptr_t boneAr
 	if (origin.IsZero()) return;
 
 	Vector3 originalPTS = origin.worldToScreen(viewMatrix);
-	if (originalPTS.z < 0.1f) return;
+	std::cout << originalPTS.z << std::endl;
+	if (originalPTS.z < 2250.f) return;
 
 	Vector3 headPos = Driver.Read<Vector3>(boneArray + bones::head * 32);
 	headPos.z = headPos.z + 15.f;
