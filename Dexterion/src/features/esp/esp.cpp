@@ -40,6 +40,8 @@ void ESP::SkeletonESP(view_matrix_t viewMatrix, uintptr_t boneArray) {
 		Vector3 b1 = VectorBone1.worldToScreen(viewMatrix);
 		Vector3 b2 = VectorBone2.worldToScreen(viewMatrix);
 
+		if (b1.z < 0.1f || b2.z < 0.1f) return;
+
 		ImGui::GetBackgroundDrawList()->AddLine({ b1.x, b1.y }, { b2.x, b2.y }, SkeletonColor, 1.5f);
 	}
 }
