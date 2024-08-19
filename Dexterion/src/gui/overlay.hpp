@@ -43,16 +43,33 @@ public:
 	void MakeDeviceAndSwapChain();
 	void InitWindow(int nShowCmd);
 	void RenderLoop();
+	void EndRenderLoop();
 	void SetupImGuiStyle();
 	void DestroyOWindow();
 
 	void RenderMenu();
+	void MenuBar();
+
+	void EspRender();
+
+	int TabIndex = 0;
 };
 
 inline namespace Settings {
-	inline ImFont* NormalText;
-	inline ImFont* TitleText;
-	inline ImFont* SubTitleText;
-	inline ImFont* HighlightText;
-	inline ImFont* EspNameText;
+	inline float HEIGHT = 720.f;
+	inline float WIDTH = HEIGHT / 4 + HEIGHT / 2;
+
+	inline namespace Text {
+		inline ImFont* Normal;
+		inline ImFont* Title;
+		inline ImFont* SubTitle;
+		inline ImFont* Highlight;
+		inline ImFont* EspName;
+	}
+
+	inline namespace Separator {
+		inline float Width = WIDTH / 2;
+		inline float Height = HEIGHT / 2 + 20;
+		inline float Text = 4.f;
+	}
 }

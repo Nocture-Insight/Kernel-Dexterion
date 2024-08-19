@@ -51,7 +51,7 @@ class CCSPlayerController {
 public:
 	uintptr_t entityList;
 	uintptr_t baseAddy;
-	int id;
+	int id = 0;
 
 	CCSPlayerController(uintptr_t base) {
 		baseAddy = base;
@@ -84,7 +84,7 @@ public:
 	std::string getPawnName();
 
 	// C_CSPlayerPawn
-	std::uint32_t C_CSPlayerPawn_;
+	std::uint32_t C_CSPlayerPawn_ = 0;
 	std::uint32_t getC_CSPlayerPawn();
 };
 
@@ -152,7 +152,6 @@ public:
 	// CGameSceneNode
 	uintptr_t CGameSceneNode;
 	uintptr_t getCGameSceneNode();
-
 };
 
 class CGameSceneNode {

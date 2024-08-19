@@ -195,7 +195,7 @@ public:
 		r.size = size;
 
 		if (DeviceIoControl(this->driv, DriverCodes::Read, &r, sizeof(r), &r, sizeof(r), &bytesRead, nullptr))
-			return size == bytesRead;
+			return size == sizeof(bytesRead);
 
 		return FALSE;
 	}

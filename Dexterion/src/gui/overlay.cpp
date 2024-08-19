@@ -159,17 +159,13 @@ void Gui::MakeDeviceAndSwapChain() {
 	swapChain.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	HRESULT res = D3D11CreateDeviceAndSwapChain(0, D3D_DRIVER_TYPE_HARDWARE, 0, 0, featureLevels, 2, D3D11_SDK_VERSION, &swapChain, &loadedSwapChain, &device, &loadedLevel, &deviceContext);
-	if (res == DXGI_ERROR_UNSUPPORTED)
-		res = D3D11CreateDeviceAndSwapChain(0, D3D_DRIVER_TYPE_WARP, 0, 0, featureLevels, 2, D3D11_SDK_VERSION, &swapChain, &loadedSwapChain, &device, &loadedLevel, &deviceContext);
-
-	if (res != S_OK) {
-		exit(1);
-		return;
-	}
 
 	loadedSwapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
-	device->CreateRenderTargetView(backBuffer, 0, &renderTargetView);
-	backBuffer->Release();
+
+	if (backBuffer) {
+		device->CreateRenderTargetView(backBuffer, 0, &renderTargetView);
+		backBuffer->Release();
+	}
 };
 
 void Gui::InitWindow(int nShowCmd) {
@@ -178,12 +174,12 @@ void Gui::InitWindow(int nShowCmd) {
 
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
-	io.Fonts->AddFontDefault();
-	Settings::NormalText = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Verdana.ttf", 15.f);
-	Settings::TitleText = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\verdanab.ttf", 16.f);
-	Settings::SubTitleText = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\verdanab.ttf", 15.f);
-	Settings::HighlightText = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\verdanai.ttf", 13.f);
-	Settings::EspNameText = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\verdanab.ttf", 15.f);
+	//io.Fonts->AddFontDefault();
+	Settings::Text::Normal		= io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Verdana.ttf", 15.f);
+	Settings::Text::Title		= io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\verdanab.ttf", 16.f);
+	Settings::Text::SubTitle	= io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\verdanab.ttf", 15.f);
+	Settings::Text::Highlight	= io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\verdanai.ttf", 13.f);
+	Settings::Text::EspName		= io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\verdanab.ttf", 15.f);
 
 	ImGui::StyleColorsDark();
 
@@ -201,7 +197,6 @@ bool Gui::IsMenuOpen() {
 
 void Gui::RenderLoop() {
 	static bool state = true;
-	static bool check = false;
 
 	ShowWindow(GetConsoleWindow(), miscConf.consoleVisible ? SW_RESTORE : SW_HIDE);
 	SetWindowDisplayAffinity(GetForegroundWindow(), miscConf.obsBypass ? WDA_EXCLUDEFROMCAPTURE : WDA_NONE);
@@ -226,6 +221,10 @@ void Gui::RenderLoop() {
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+}
+
+void Gui::EndRenderLoop() {
+	static bool check = false;
 
 	if (menutoggle) {
 		this->RenderMenu();
@@ -274,5 +273,50 @@ void Gui::DestroyOWindow() {
 }
 
 void Gui::RenderMenu() {
+	ImGui::PushFont(Settings::Text::Normal);
+	ImGui::SetNextWindowSize({ Settings::WIDTH, Settings::HEIGHT }, ImGuiCond_FirstUseEver);
+	ImGui::Begin("Dexterion | Driver Edition", 0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar);
 
+	SetupImGuiStyle();
+	MenuBar();
+
+	EspRender();
+	
+	ImGui::PopFont();
+	ImGui::End();
+}
+
+void Gui::MenuBar() {
+	ImGui::BeginMenuBar();
+
+	if (ImGui::MenuItem("ESP")) TabIndex = 0;
+
+	ImGui::EndMenuBar();
+}
+
+
+
+
+// WHOLE Menu ImGui
+
+
+
+
+
+void Gui::EspRender() {
+	if (TabIndex == 0) {
+		ImGui::BeginChild("Features", { Settings::Separator::Width, Settings::Separator::Height }, ImGuiChildFlags_Border, ImGuiWindowFlags_None);
+		ImGui::PushFont(Settings::Text::Title);
+		ImGui::Text("ESP");
+		ImGui::PopFont();
+		ImGui::Dummy({ 0.f, Settings::Separator::Text });
+		ImGui::Checkbox("Main Switch", &espConf.state);
+		ImGui::Dummy({ 0.f, Settings::Separator::Text });
+		if (espConf.state) {
+			ImGui::Checkbox("Box ESP", &espConf.boundBox);
+			ImGui::Dummy({ 0.f, Settings::Separator::Text });
+			ImGui::Checkbox("Skeleton ESP", &espConf.skeleton);
+			ImGui::Dummy({ 0.f, Settings::Separator::Text });
+		}
+	}
 }

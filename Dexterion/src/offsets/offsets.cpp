@@ -345,26 +345,31 @@ bool C_C4::isPlanted() {
 }
 
 bool C_C4::isCarrier(int index) {
-	return m_bCarrier = false;
+	m_bCarrier = false;
+	return m_bCarrier;
 }
 
 uintptr_t C_C4::getCarrier() {
-	return m_pCarrier = 0x0;
+	m_pCarrier = 0x0;
+	return m_pCarrier;
 }
 
 int C_C4::getPlantedSite()
 {
-	return site = Driver.Read<int>(c4 + clientDLL::C_PlantedC4_["m_nBombSite"]);
+	site = Driver.Read<int>(c4 + clientDLL::C_PlantedC4_["m_nBombSite"]);
+	return site;
 }
 
 bool C_C4::isBeingDefused()
 {
-	return isDefusing = Driver.Read<bool>(c4 + clientDLL::C_PlantedC4_["m_bBeingDefused"]);
+	isDefusing = Driver.Read<bool>(c4 + clientDLL::C_PlantedC4_["m_bBeingDefused"]);
+	return isDefusing;
 }
 
 long C_C4::getDefuseTime()
 {
-	return defuseTime = Driver.Read<long>(c4 + clientDLL::C_PlantedC4_["m_flDefuseCountDown"]);
+	defuseTime = Driver.Read<long>(c4 + clientDLL::C_PlantedC4_["m_flDefuseCountDown"]);
+	return defuseTime;
 }
 
 uintptr_t C_C4::getCGameSceneNode() {
@@ -374,10 +379,12 @@ uintptr_t C_C4::getCGameSceneNode() {
 
 uint32_t CBasePlayerController::getDesiredFov()
 {
-	return iDesiredFov = Driver.Read<uint32_t>(controller + clientDLL::CBasePlayerController_["m_iDesiredFov"]);
+	iDesiredFov = Driver.Read<uint32_t>(controller + clientDLL::CBasePlayerController_["m_iDesiredFov"]);
+	return iDesiredFov;
 }
 
 uint64_t CBasePlayerController::getSteamId()
 {
-	return steamId = Driver.Read<uint64_t>(controller + clientDLL::CBasePlayerController_["m_steamID"]);
+	steamId = Driver.Read<uint64_t>(controller + clientDLL::CBasePlayerController_["m_steamID"]);
+	return steamId;
 }

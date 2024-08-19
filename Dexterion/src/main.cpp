@@ -4,6 +4,7 @@
 
 #include "offsets/offsets.cpp"
 #include "gui/overlay.hpp"
+#include "features/entry.hpp"
 
 LRESULT Wndproc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam)) return 0;
@@ -17,16 +18,6 @@ LRESULT Wndproc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		return 0;
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
-}
-
-bool RunMainCheat(Gui gui, MemoryManagement::moduleData client) {
-	gui.RenderLoop();
-
-	CCSPlayerController CPS_(client.base);
-	LocalPlayer lp(client.base);
-
-	CPS_.value = lp.getPlayerPawn();
-	Logger.Info(CPS_.getPawnName());
 }
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
@@ -61,6 +52,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		if (client.base != 0) {
 			std::cout << "Client found!" << std::endl;
 
+			config::refresh();
+			config::load(0);
+
 			bool state = true;
 
 			Gui gui;
@@ -71,17 +65,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			gui.MakeDeviceAndSwapChain();
 			gui.InitWindow(nShowCmd);
 
-			while (true) {
+			while (state) {
 				if (GetKeyState(VK_END))
 					state = false;
 
-				std::thread t1(RunMainCheat, gui, client);
+				gui.RenderLoop();
 
-				if (!state) {
-					gui.DestroyOWindow();
-					break;
-				}
+				mainLoop(state, client);
+
+				gui.EndRenderLoop();
 			}
+
+			gui.DestroyOWindow();
 		}
 	}
 #else

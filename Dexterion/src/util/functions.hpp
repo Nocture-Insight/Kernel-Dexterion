@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 
+#include "../../lib/imgui/imgui.h"
+
 inline class _Logger {
 public:
 	HANDLE hConsole;
@@ -12,47 +14,45 @@ public:
 		this->hConsole = hConsole;
 	}
 
-	std::wstring StrToWstr(std::string str)
+	std::string WStrTostr(std::wstring str)
 	{
-		std::wstring temp;
-		std::copy(str.begin(), str.end(), std::back_inserter(temp));
-		return temp;
+		return std::string(str.begin(), str.end());
 	}
 
-	// WString
-	void Info(std::wstring str, bool endLine = true) {
+	// String
+	void Info(std::string str, bool endLine = true) {
 		SetConsoleTextAttribute(hConsole, 9);
 		if (endLine)
-			std::wcout << "[Info] " << str << std::endl;
+			std::cout << "[Info] " << str << std::endl;
 		else
-			std::wcout << "[Info] " << str;
+			std::cout << "[Info] " << str;
 	}
 
-	void Success(std::wstring str, bool endLine = true) {
+	void Success(std::string str, bool endLine = true) {
 		SetConsoleTextAttribute(hConsole, 10);
 		if (endLine)
-			std::wcout << "[Success] " << str << std::endl;
+			std::cout << "[Success] " << str << std::endl;
 		else
-			std::wcout << "[Success] " << str;
+			std::cout << "[Success] " << str;
 	}
 
-	void Error(std::wstring str, bool endLine = true) {
+	void Error(std::string str, bool endLine = true) {
 		SetConsoleTextAttribute(hConsole, 12);
 		if (endLine)
-			std::wcout << "[Error] " << str << std::endl;
+			std::cout << "[Error] " << str << std::endl;
 		else
-			std::wcout << "[Error] " << str;
+			std::cout << "[Error] " << str;
 	}
 
-	void Warn(std::wstring str, bool endLine = true) {
+	void Warn(std::string str, bool endLine = true) {
 		SetConsoleTextAttribute(hConsole, 14);
 		if (endLine)
-			std::wcout << "[Warning] " << str << std::endl;
+			std::cout << "[Warning] " << str << std::endl;
 		else
-			std::wcout << "[Warning] " << str;
+			std::cout << "[Warning] " << str;
 	}
 
-	void Log(std::wstring str, bool endLine = true) {
+	void Log(std::string str, bool endLine = true) {
 		Info(str, endLine);
 	}
 
@@ -61,25 +61,25 @@ public:
 
 
 
-	// String
-	void Info(std::string str, bool endLine = true) {
-		Info(StrToWstr(str), endLine);
+	// WString
+	void Info(std::wstring str, bool endLine = true) {
+		Info(WStrTostr(str), endLine);
 	}
 
-	void Success(std::string str, bool endLine = true) {
-		Success(StrToWstr(str), endLine);
+	void Success(std::wstring str, bool endLine = true) {
+		Success(WStrTostr(str), endLine);
 	}
 
-	void Error(std::string str, bool endLine = true) {
-		Error(StrToWstr(str), endLine);
+	void Error(std::wstring str, bool endLine = true) {
+		Error(WStrTostr(str), endLine);
 	}
 
-	void Warn(std::string str, bool endLine = true) {
-		Warn(StrToWstr(str), endLine);
+	void Warn(std::wstring str, bool endLine = true) {
+		Warn(WStrTostr(str), endLine);
 	}
 
-	void Log(std::string str, bool endLine = true) {
-		Log(StrToWstr(str), endLine);
+	void Log(std::wstring str, bool endLine = true) {
+		Log(WStrTostr(str), endLine);
 	}
 } Logger(GetStdHandle(STD_OUTPUT_HANDLE));
 
@@ -92,5 +92,23 @@ inline namespace utils {
 
 	inline std::wstring getConfigPath() {
 		return std::wstring(L"C:\\Dexterion\\Config");
+	}
+
+	inline bool IsGameWindowActive() {
+		HWND hwnd = GetForegroundWindow();
+		if (hwnd) {
+			char windowTitle[256];
+			GetWindowTextA(hwnd, windowTitle, sizeof(windowTitle));
+			return std::string(windowTitle).find("Counter-Strike 2") != std::string::npos;
+		}
+		return false;
+	}
+
+	inline ImColor Float3ToImColor(float colors[3], float a = 1.f) {
+		return ImColor(colors[0], colors[1], colors[2], a);
+	}
+
+	inline ImColor Float4ToImColor(float colors[4]) {
+		return ImColor(colors[0], colors[1], colors[2], colors[3]);
 	}
 }

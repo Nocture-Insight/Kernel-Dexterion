@@ -154,6 +154,8 @@
     <ClCompile Include="lib\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\config\config.cpp" />
     <ClCompile Include="src\features\entry.cpp" />
+    <ClCompile Include="src\features\esp\esp.cpp" />
+    <ClCompile Include="src\features\esp\esp.hpp" />
     <ClCompile Include="src\gui\overlay.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\offsets\offsets.hpp" />
