@@ -13,7 +13,7 @@ void ESP::BoundingBox(Vector3 origin, view_matrix_t viewMatrix, uintptr_t boneAr
 
 	Vector3 originalPTS = origin.worldToScreen(viewMatrix);
 	std::cout << originalPTS.z << std::endl;
-	if (originalPTS.z < 2250.f) return;
+	if (originalPTS.z < 10.f) return;
 
 	Vector3 headPos = Driver.Read<Vector3>(boneArray + bones::head * 32);
 	headPos.z = headPos.z + 15.f;
@@ -41,7 +41,7 @@ void ESP::SkeletonESP(view_matrix_t viewMatrix, uintptr_t boneArray) {
 		Vector3 b1 = VectorBone1.worldToScreen(viewMatrix);
 		Vector3 b2 = VectorBone2.worldToScreen(viewMatrix);
 
-		if (b1.z < 0.1f || b2.z < 0.1f) return;
+		if (b1.z < 10.f || b2.z < 10.f) return;
 
 		ImGui::GetBackgroundDrawList()->AddLine({ b1.x, b1.y }, { b2.x, b2.y }, SkeletonColor, 1.5f);
 	}

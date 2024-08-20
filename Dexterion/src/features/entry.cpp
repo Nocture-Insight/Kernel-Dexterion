@@ -14,7 +14,7 @@ void mainLoop(bool state, MemoryManagement::moduleData client) {
 	DWORD_PTR baseViewAnglesAddy = client.base + offsets::clientDLL["dwViewAngles"];
 	uintptr_t entityList = Driver.Read<uintptr_t>(client.base + offsets::clientDLL["dwEntityList"]);
 
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < 64; i++) {
 		CCSPlayerController.id = i;
 		CCSPlayerController.getListEntry();
 		CCSPlayerController.getController();

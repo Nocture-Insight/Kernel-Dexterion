@@ -4,6 +4,6 @@
 #include "../offsets/offsets.hpp"
 #include "../config/config.hpp"
 
-#include "esp/esp.hpp"
+#include "esp/esp.cpp"
 
 void mainLoop(bool state, MemoryManagement::moduleData client);
