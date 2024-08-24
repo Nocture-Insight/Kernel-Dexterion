@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">Dexterion Revmap</h1>
-<p align="center">An open-source, external tool for Counter-Strike 2 that operates at the <b>kernel level</b>, providing read-only gameplay enhancer.</p>
+<p align="center">An open-source, external tool for Counter-Strike 2 that operates at the <b>kernel level</b>, <br>providing read-only gameplay enhancer.</p>
 <p align="center">This project was created to explore how computer kernel comunicates, <br>Vulnerability on Anti-Cheat and explolring the world of game enhancements.</p>
 
 <div align="center">
