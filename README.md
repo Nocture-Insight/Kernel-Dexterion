@@ -20,12 +20,14 @@
 
 
 ## READ FIRST
+> [!NOTE]
+> **First of all we recommend to know basics of [C++](https://en.cppreference.com/) and [Kernel Microsoft Docs](https://learn.microsoft.com/en-us/windows-hardware/drivers/develop/getting-started-with-windows-drivers) or [Kernel f/ Github](https://github.com/microsoft/Windows-driver-samples?tab=security-ov-file) or [Kernel f/ Code-Project](https://www.codeproject.com/Articles/9504/Driver-Development-Part-1-Introduction-to-Drivers)**\
+> **Additionaly, if dont know anything about cibersecurity or virus analysis we recommend to shut-up\
+> and learn about thigns mentioned above first then understand how does this works and why this isnt a virus.**
+
 > [!IMPORTANT]
 > **Dexterion Revmap is not a plug 'n play solution. [+info](https://github.com/Nocture-Insight/Kernel-Dexterion/main/README.md#vac).**\
-> **We suggest you to read this [readme.md](https://github.com/Nocture-Insight/Kernel-Dexterion/main/README.md) file before starting contributing, self-use, or anything.**\
-> **This game enchancer could be a *violation of* the Terms of Service (ToS) of any game in which it is used.\
-> We disclaim all liability for any *account bans* or *penalties incurred* as a result of its use.\
-> By using this game enchancer, you acknowledge that you are solely responsible for any consequences.**
+> **We suggest you to read this [readme.md](https://github.com/Nocture-Insight/Kernel-Dexterion/main/README.md) file before starting contributing, self-use, or anything related.**
 
 ### Building
 Manual building this game enhancer
@@ -46,8 +48,9 @@ We will review and help with all reasonable pull requests as long as the guideli
 
 ## Troubleshooting, Bugs & Suggestions
 Troublehoosting, bug reports and suggestions should be made in this repo's [issue tracker](https://github.com/Nocture-Insight/Kernel-Dexterion/issues) using the templates provided.  
-Please provide as much information as you can to best help us understand your issue and give a better chance of it being resolved.\
-Also you can join our community for future notifications:
+Please provide as much information as you can to best help us understand your issue and give a better chance of it being resolved.
+
+*If you got any question non-related to cheats, you can join our community and stay updated:*
 > [!WARNING]
 > In this [discord server](https://discord.gg/25rtyPfMEQ) exclusively for discussions about hardware, kernels, and cybersecurity.\
 > We do not discuss cheats or any illegal activities that agains discord [tos](https://discord.com/tos) and [guidelines](https://discord.com/guidelines).
@@ -58,6 +61,10 @@ We do as much as posible to avoid begin detected ( goal of the project ) and inv
 However, we declares heres, that we didnt studied in-depth of this system.\
 I cannot 100% confirm that vac doesnt detect this but in this case the cheat should be undetected 100%.\
 Something to be aware of is the Overwatch if you got any unussual activity you will get caught and banned.
+> [!WARNING]
+> **This game enchancer could be a *violation of* the Terms of Service (ToS) of any game in which it is used.\
+> We disclaim all liability for any *account bans* or *penalties incurred* as a result of its use.\
+> By using this game enchancer, you acknowledge that you are solely responsible for any consequences.**
 
 ## Donations
 We appreciate it.
