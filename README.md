@@ -20,6 +20,9 @@
 
 
 ## READ FIRST
+> [!WARNING]
+> THIS CODE IS NOT FINISHED.
+
 > [!NOTE]
 > **First of all we recommend to know basics of [C++](https://en.cppreference.com/) and [Kernel Microsoft Docs](https://learn.microsoft.com/en-us/windows-hardware/drivers/develop/getting-started-with-windows-drivers) or [Kernel f/ Github](https://github.com/microsoft/Windows-driver-samples?tab=security-ov-file) or [Kernel f/ Code-Project](https://www.codeproject.com/Articles/9504/Driver-Development-Part-1-Introduction-to-Drivers)**\
 > **Additionaly, if dont know anything about cibersecurity or virus analysis we recommend to shut-up\
